@@ -1,3 +1,4 @@
+# Global balans o'zgaruvchisi
 balance: float = 0.0
 account_created: bool = False
 
@@ -17,51 +18,49 @@ def deposit() -> None:
     if not account_created:
         print("\n Avval hisob oching.")
         return
-    amount_str = input("\n Qo'yiladigan summani kiriting: ")
+    amount_str = input("\n Qo‘yiladigan summani kiriting: ")
     if amount_str.replace('.', '', 1).isdigit():
         amount = float(amount_str)
         if amount > 0:
             balance += amount
-            print(f"{amount} so'm qo'yildi.")
+            print(f" {amount} so'm qo'yildi.")
         else:
-            print("Musbat summa kiriting.")
+            print(" Musbat summa kiriting.")
     else:
-        print("To'g'ri raqam kiriting.")
+        print(" To'g'ri raqam kiriting.")
 
 def withdraw() -> None:
     """Pul yechib olish funksiyasi."""
-    global balance, account_created
+    global balance
     if not account_created:
         print("\n Avval hisob oching.")
         return
     amount_str = input("\n Yechiladigan summani kiriting: ")
-    try:
+    if amount_str.replace('.', '', 1).isdigit():
         amount = float(amount_str)
         if 0 < amount <= balance:
             balance -= amount
-            print(f"{amount} so'm yechildi.")
-        elif amount <= 0:
-            print("Musbat summa kiriting.")
+            print(f" {amount} so'm yechildi.")
         else:
-            print("Yetarli mablag' mavjud emas yoki noto'g'ri summa.")
-    except ValueError:
-        print("To'g'ri raqam kiriting.")
+            print(" Yetarli mablag' mavjud emas yoki noto'g'ri summa.")
+    else:
+        print(" To'g'ri raqam kiriting.")
 
 def check_balance() -> None:
     """Hisobdagi balansni ko'rsatadi."""
     if not account_created:
-        print("\n Avval hisob oching.")
+        print("\n❌ Avval hisob oching.")
     else:
-        print(f"\n Hisobingizdagi balans: {balance} so'm")
+        print(f"\n📊 Hisobingizdagi balans: {balance} so'm")
 
 def main() -> None:
     """Dastur boshqaruv markazi (menu)."""
     while True:
         print("\n===== MiniBank Menyusi =====")
         print("1. 🏦 Hisob ochish")
-        print("2. 💵 Pul qo'yish")
+        print("2. 💵 Pul qo‘yish")
         print("3. 🏧 Pul yechib olish")
-        print("4. 📊 Balansni ko'rish")
+        print("4. 📊 Balansni ko‘rish")
         print("0. ❌ Chiqish")
         print("============================")
         choice = input("Tanlang (0-4): ")
@@ -78,13 +77,7 @@ def main() -> None:
             print("\n Dasturdan chiqildi.")
             break
         else:
-            print("Noto'g'ri tanlov! Qayta urinib ko'ring.")
-
-def run():
-    """Dastur ishga tushirish funksiyasi."""
-    print("MiniBank dasturiga xush kelibsiz!")
-    main()
-
+            print(" Noto'g'ri tanlov! Qayta urinib ko'ring.")
 
 # Dastur avtomatik ishga tushadi
 type_here = input("Boshlash uchun biror tugmani bosing...\n")
