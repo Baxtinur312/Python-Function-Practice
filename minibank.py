@@ -12,12 +12,12 @@ def create_account() -> None:
         print("\n Hisob muvaffaqiyatli ochildi.")
 
 def deposit() -> None:
-    """Pul qo‘yish funksiyasi."""
+    """Pul qo'yish funksiyasi."""
     global balance
     if not account_created:
         print("\n Avval hisob oching.")
         return
-    amount_str = input("\n💰 Qo'yiladigan summani kiriting: ")
+    amount_str = input("\n Qo'yiladigan summani kiriting: ")
     if amount_str.replace('.', '', 1).isdigit():
         amount = float(amount_str)
         if amount > 0:
@@ -30,19 +30,21 @@ def deposit() -> None:
 
 def withdraw() -> None:
     """Pul yechib olish funksiyasi."""
-    global balance
+    global balance, account_created
     if not account_created:
         print("\n Avval hisob oching.")
         return
     amount_str = input("\n Yechiladigan summani kiriting: ")
-    if amount_str.replace('.', '', 1).isdigit():
+    try:
         amount = float(amount_str)
         if 0 < amount <= balance:
             balance -= amount
             print(f"{amount} so'm yechildi.")
+        elif amount <= 0:
+            print("Musbat summa kiriting.")
         else:
             print("Yetarli mablag' mavjud emas yoki noto'g'ri summa.")
-    else:
+    except ValueError:
         print("To'g'ri raqam kiriting.")
 
 def check_balance() -> None:
@@ -78,7 +80,13 @@ def main() -> None:
         else:
             print("Noto'g'ri tanlov! Qayta urinib ko'ring.")
 
-# Dastur ishga tushishi
-if __name__ == "__main__":
+def run():
+    """Dastur ishga tushirish funksiyasi."""
+    print("MiniBank dasturiga xush kelibsiz!")
     main()
+
+
+# Dastur avtomatik ishga tushadi
+type_here = input("Boshlash uchun biror tugmani bosing...\n")
+main()
 
